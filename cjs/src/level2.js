@@ -56,7 +56,7 @@ function buildSpace(){
         w = Math.floor(Math.random()*stg.canvas.width);
         h = Math.floor(Math.random()*stg.canvas.height);
         alpha = Math.random();
-        star.graphics.beginFill("#FFF").drawCircle(0,0,1);
+        star.graphics.beginFill("#FFF").drawCircle(0,1,10);
         star.x = w;
         star.y = h;
         star.alpha = alpha;
@@ -142,7 +142,7 @@ function handleKeyUp(e){
 function playFire(){
     if(fireAble){
     var fire = new createjs.Shape();
-    fire.graphics.beginFill("#FF0").drawRect(0,0,2,5).endFill();
+    fire.graphics.beginFill("#FF0000").drawRect(0,0,2,5).endFill();
     fire.x = player.x + 18;
     fire.y = 658;
     cjs.Sound.play("shot");
@@ -164,26 +164,45 @@ function buildMsg(){
 }
 
 function buildEnemy() {
-    var i, e1, e2, e3, e4;
+    var i, e1, e2, e3, e4,e5,e6,e7;
     e1 = new cjs.Sprite(spriteConfig, "enemy1");
     e2 = new cjs.Sprite(spriteConfig, "enemy2");
     e3 = new cjs.Sprite(spriteConfig, "enemy3");
     e4 = new cjs.Sprite(spriteConfig, "enemy4");
-    enemyClip.push(e1, e2, e3, e4);
+	 e5 = new cjs.Sprite(spriteConfig, "enemy5");
+	  e6 = new cjs.Sprite(spriteConfig, "enemy6");
+	   e7 = new cjs.Sprite(spriteConfig, "enemy7");
+
+
+
+    enemyClip.push(e1, e2, e3, e4,e5,e6,e7);
     buildEnemis();
 }
 
 function buildEnemis(){
-    var i, j=0, en, en1,en2;
+    var i, j=0, en, en1,en2,en3;
     for(i=0;i<4;i++){
         en = enemyClip[i].clone();
+		
        
             en1 = en.clone();
-			en1.x=150;
-			en1.y=-50;
+			 en1.x=100;
+		     en1.y=-50;
+		
             enemy.push(en1);
-            cjs.Tween.get(en1).wait(2000*i).to({x:100,y:800}, 3500, cjs.Ease.sineInOut(-2))
+            cjs.Tween.get(en1).wait(1500*i).to({x:200,y:800}, 2000, cjs.Ease.sineInOut(-2))
             stg.addChild(en1);
+
+			 en2 = enemyClip[i].clone();
+       
+	  
+            en3 = en.clone();
+			 en3.x=200;
+		     en3.y=-50;
+            enemy.push(en3);
+            cjs.Tween.get(en3).wait(1000*i).to({x:500,y:1000}, 3000, cjs.Ease.sineInOut(-2))
+            stg.addChild(en3);
+        
         
     }
 }
