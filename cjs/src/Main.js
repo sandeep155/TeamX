@@ -16,8 +16,8 @@ function init(){
     sWidth = stg.canvas.width;
     sHeight = stg.canvas.height;
     queue = new cjs.LoadQueue(true);
-	createjs.touch.enabled(stage)
-    
+    createjs.Touch.enable(stage);
+
     cjs.Sound.registerPlugins([cjs.HTMLAudioPlugin]);
     queue.installPlugin(cjs.Sound);
 

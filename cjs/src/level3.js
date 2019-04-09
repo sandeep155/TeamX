@@ -4,8 +4,7 @@ var sWidth, sHeight, queue, spriteConfig, starCount= 200, speed= 15;
 
 var player, lives= 5, livesTxt, score= 0, scoreTxt;
 var enemyClip=[];
-var starArr= [], fires= [], enemy= [], fireAble= true, breakAble= true;
-var stage = new createjs.Stage("canvasId");
+var starArr= [], fires= [], fires2=[], enemy= [], fireAble= true, breakAble= true;
 
 
 const ARROW_KEY_LEFT = 37;
@@ -18,8 +17,6 @@ function init(){
     sHeight = stg.canvas.height;
     queue = new cjs.LoadQueue(true);
     
-	 createjs.Touch.enable(stage);
-
     cjs.Sound.registerPlugins([cjs.HTMLAudioPlugin]);
     queue.installPlugin(cjs.Sound);
 
@@ -182,42 +179,72 @@ function buildEnemy() {
     buildEnemis();
 }
 
-function buildEnemis(){
-    var i, j=0, en, en1,en2,en3,en4,en5;
-    for(i=0;i<4;i++){
+function buildEnemis() {
+    var i, j = 0, en, en1, en2, en3, en4, en5;
+    for (i = 0; i < 4; i++) {
         en = enemyClip[i].clone();
-       
-            en1 = en.clone();
 
-			 en1.x=100;
-		     en1.y=-50;
+        en1 = en.clone();
 
-            enemy.push(en1);
-            cjs.Tween.get(en1).wait(1000*i).to({x:100,y:800}, 1500, cjs.Ease.sineInOut(-2))
-            stg.addChild(en1);
+        en1.x = 100;
+        en1.y = -50;
 
-			 en2 = enemyClip[i].clone();
-       
-            en3 = en.clone();
+        enemy.push(en1);
+        cjs.Tween.get(en1).wait(1000 * i).to({ x: 100, y: 800 }, 1500, cjs.Ease.sineInOut(-2))
+        stg.addChild(en1);
 
-			 en3.x=200;
-		     en3.y=-50;
+        en2 = enemyClip[i].clone();
 
-            enemy.push(en3);
-            cjs.Tween.get(en3).wait(0*i).to({x:200,y:300}, 2000, cjs.Ease.sineInOut(-2))
-            stg.addChild(en3);
+        en3 = en.clone();
 
-			 en4 = enemyClip[i].clone();
-       
-            en5 = en.clone();
-			en5.x=150;
-			en5.y=-50;
-            enemy.push(en5);
-            cjs.Tween.get(en5).wait(2000*i).to({x:300,y:1000}, 1700, cjs.Ease.sineInOut(-2))
-            stg.addChild(en5);
+        en3.x = 200;
+        en3.y = -50;
+
+        enemy.push(en3);
+        cjs.Tween.get(en3).wait(3000 * i).to({ x: 500, y: 1000 }, 2000, cjs.Ease.sineInOut(-2))
+        stg.addChild(en3);
+
+        en4 = enemyClip[i].clone();
+
+        en5 = en.clone();
+        en5.x = 150;
+        en5.y = -50;
+        enemy.push(en5);
+        cjs.Tween.get(en5).wait(2000 * i).to({ x: 300, y: 1000 }, 1700, cjs.Ease.sineInOut(-2))
+        stg.addChild(en5);
+
         
     }
+    for (i = 0; i < 3; i++) {
+        var fire2 = new createjs.Shape();
+        fire2.graphics.beginFill("#FF0").drawRect(0, 0, 10, 10).endFill();
+        fire2.x = en5.x+40;
+        fire2.y = en5.y +100;
+        cjs.Sound.play("shot");
+        fires2.push(fire2);
+        stg.addChild(fire2);
+    }
+    for (i = 0; i < 3; i++) {
+        var fire2 = new createjs.Shape();
+        fire2.graphics.beginFill("#FF0").drawRect(0, 0, 10, 10).endFill();
+        fire2.x = en3.x + 30;
+        fire2.y = en3.y + 50;
+        cjs.Sound.play("shot");
+        fires2.push(fire2);
+        stg.addChild(fire2);
+    }
+    for (i = 0; i < 3; i++) {
+        var fire2 = new createjs.Shape();
+        fire2.graphics.beginFill("#FF0").drawRect(0, 0, 10, 10).endFill();
+        fire2.x = en1.x + 50;
+        fire2.y = en1.y + 100;
+        cjs.Sound.play("shot");
+        fires2.push(fire2);
+        stg.addChild(fire2);
+    }
+
 }
+
 
 
 
@@ -228,7 +255,7 @@ function updateStageHandler(event) {
     updateEnemy();
     updateFire();
     updateMsg();
-
+    updateFire2();
     checkGame();
     stg.update(event);
 }
@@ -272,6 +299,22 @@ function updateFire(){
             continue;
         }
         fire.y = nextY;
+    }
+}
+
+function updateFire2() {
+    var i, nextY, fire2;
+    for (i = 0; i < fires2.length; i++) {
+        fire2 = fires2[i];
+        nextY = fire2.y + 40;
+
+
+        if (nextY <= 0) {
+            fires2.splice(i, 1)
+            stg.removeChild(fire2);
+            continue;
+        }
+        fire2.y = nextY;
     }
 }
 

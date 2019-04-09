@@ -41,6 +41,7 @@ function completeLoadedHandler(){
 function buildGame(){
     buildSpace();
     buildMsg();
+    addButton();
  
 }
 
@@ -62,7 +63,6 @@ function buildSpace(){
         stg.addChild(starSky);
     }
 }
-
 
 
 function buildMsg(){
@@ -101,10 +101,6 @@ function updateStar(){
 }
 
 
-function updateMsg(){
-    scoreTxt.text = "score:" + score;
-    livesTxt.text = "lives:" + lives;
-}
 
 
 

@@ -17,6 +17,7 @@ function init(){
     sHeight = stg.canvas.height;
     queue = new cjs.LoadQueue(true);
     
+    
     cjs.Sound.registerPlugins([cjs.HTMLAudioPlugin]);
     queue.installPlugin(cjs.Sound);
 
